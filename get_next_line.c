@@ -6,7 +6,7 @@
 /*   By: ccaballe <ccaballe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:20:16 by ccaballe          #+#    #+#             */
-/*   Updated: 2022/11/02 17:39:08 by ccaballe         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:35:04 by ccaballe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ char	*ft_read_file(int fd, char *storage)
 		if (bytes_read == -1)
 		{
 			free (buffer);
-			free (storage);
-			return (NULL);
+			return (ft_free(storage));
 		}
 		buffer[bytes_read] = '\0';
 		storage = ft_strjoin(storage, buffer);
@@ -54,14 +53,14 @@ char	*ft_get_line(char *storage)
 	i = 0;
 	if (storage[i] == '\0')
 		return (NULL);
-	while (storage[i] != '\n' && storage[i] != '\0')
+	while (storage[i] && storage[i] != '\n')
 		i++;
 	if (storage[i] != '\n')
 		line = (char *)malloc(sizeof(char) * (i + 1));
 	else
 		line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
-		return (NULL);
+		return (ft_free(storage));
 	i = 0;
 	while (storage[i] != '\n' && storage[i] != '\0')
 	{
@@ -85,6 +84,8 @@ char	*ft_clean_storage(char *storage)
 	i = 0;
 	while (storage[i] && storage[i] != '\n')
 		i++;
+	if (storage[i] == '\0')
+		return (ft_free(storage));
 	j = 0;
 	clean = (char *)malloc(sizeof(char) * (ft_strlen(storage) - i));
 	if (!clean)
@@ -106,21 +107,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	// if (!storage)
-	// {
-	// 	storage = (char *)malloc(sizeof(char) * 1);
-	// 	if (!storage)
-	// 		return (NULL);
-	// 	storage[0] = '\0';
-	// }
 	storage = ft_read_file(fd, storage);
 	if (!storage)
 		return (NULL);
 	line = ft_get_line(storage);
-	if (!line)
-		return (ft_free(storage));
 	storage = ft_clean_storage(storage);
-	if (!storage)
-		return (ft_free(line));
 	return (line);
 }

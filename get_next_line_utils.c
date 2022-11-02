@@ -6,30 +6,11 @@
 /*   By: ccaballe <ccaballe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:03 by ccaballe          #+#    #+#             */
-/*   Updated: 2022/11/02 16:49:44 by ccaballe         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:21:55 by ccaballe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-// void	*ft_memcpy(void *dst, const void *src, size_t n)
-// {
-// 	size_t			i;
-// 	unsigned char	*a;
-// 	unsigned char	*b;
-
-// 	i = 0;
-// 	a = (unsigned char *)dst;
-// 	b = (unsigned char *)src;
-// 	if (!dst && !src)
-// 		return (NULL);
-// 	while (i < n)
-// 	{
-// 		a[i] = b[i];
-// 		i++;
-// 	}
-// 	return (dst);
-// }
 
 int	ft_strlen(char *s)
 {
@@ -43,54 +24,31 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-// char	*ft_strjoin(char *s1, char *s2)
-// {
-// 	char	*s3;
-// 	size_t	i;
-// 	size_t	l;
-
-// 	l = ft_strlen(s1);
-// 	s3 = (char *)malloc(sizeof(char) * (l + ft_strlen(s2) + 1));
-// 	if (!s3)
-// 		return (NULL);
-// 	if (l != 0)
-// 		ft_memcpy(s3, s1, l);
-// 	i = 0;
-// 	while (s2[i] != '\0')
-// 	{
-// 		s3[l + i] = s2[i];
-// 		i++;
-// 	}
-// 	s3[l + i] = '\0';
-// 	free(s1);
-// 	return (s3);
-// }
-
-char	*ft_strjoin(char *str_file, char *buff)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
 	char	*str;
 
-	if (!str_file)
+	if (!s1)
 	{
-		str_file = (char *)malloc(1 * sizeof(char));
-		str_file[0] = '\0';
+		s1 = (char *)malloc(1 * sizeof(char));
+		s1[0] = '\0';
 	}
-	if (!str_file || !buff)
+	if (!s1 || !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * ((ft_strlen(str_file) + ft_strlen(buff)) + 1));
+	str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
 	if (str == NULL)
 		return (NULL);
 	i = -1;
 	j = 0;
-	if (str_file)
-		while (str_file[++i] != '\0')
-			str[i] = str_file[i];
-	while (buff[j] != '\0')
-		str[i++] = buff[j++];
+	if (s1)
+		while (s1[++i] != '\0')
+			str[i] = s1[i];
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
 	str[i] = '\0';
-	free(str_file);
+	free(s1);
 	return (str);
 }
 

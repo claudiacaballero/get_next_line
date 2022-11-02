@@ -6,7 +6,7 @@
 /*   By: ccaballe <ccaballe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:46 by ccaballe          #+#    #+#             */
-/*   Updated: 2022/11/02 16:49:50 by ccaballe         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:19:20 by ccaballe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 int		ft_strlen(char *s);
-char	*ft_strjoin(char *str_file, char *buff);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(char *s, int c);
 void	*ft_calloc(size_t count, size_t size);
 char	*get_next_line(int fd);

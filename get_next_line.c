@@ -39,7 +39,7 @@ char	*ft_read_file(int fd, char *storage)
 
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
-		return (NULL);
+		return (ft_free(storage, ""));
 	bytes_read = 1;
 	buffer[0] = '\0';
 	while (!ft_strchr(buffer, '\n') && bytes_read > 0)

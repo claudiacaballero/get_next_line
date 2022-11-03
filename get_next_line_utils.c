@@ -33,10 +33,11 @@ char	*ft_strjoin(char *storage, char *buffer)
 	if (!storage)
 	{
 		storage = (char *)malloc(1 * sizeof(char));
-		if (!storage || !buffer)
-			return (ft_free(storage, buffer));
-		storage[0] = '\0';
+		if (storage)
+			storage[0] = '\0';
 	}
+	if (!storage || !buffer)
+		return (ft_free(storage, buffer));
 	str = malloc(sizeof(char) * ((ft_strlen(storage) + ft_strlen(buffer)) + 1));
 	if (!str)
 		return (ft_free(storage, buffer));

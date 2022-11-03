@@ -23,5 +23,6 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(char *s, int c);
 void	*ft_calloc(size_t count, size_t size);
 char	*get_next_line(int fd);
+void	*ft_free(char *str1, char *str2);
 
 #endif

@@ -12,9 +12,23 @@
 
 #include "get_next_line.h"
 
-void	*ft_free(char *str)
+void	*ft_free(char *str1, char *str2)
 {
-	free (str);
+	if (!str2 || str2[0] == '\0')
+	{
+		free(str1);
+		return (NULL);
+	}	
+	else if (!str1 || str1[0] == '\0')
+	{
+		free(str2);
+		return (NULL);
+	}	
+	else
+	{
+		free(str1);
+		free(str2);
+	}
 	return (NULL);
 }
 
@@ -34,12 +48,12 @@ char	*ft_read_file(int fd, char *storage)
 		if (bytes_read == -1)
 		{
 			free (buffer);
-			return (ft_free(storage));
+			return (ft_free(storage, ""));
 		}
 		buffer[bytes_read] = '\0';
 		storage = ft_strjoin(storage, buffer);
 		if (!storage)
-			return (ft_free(buffer));
+			return (ft_free(buffer, ""));
 	}
 	free(buffer);
 	return (storage);
@@ -60,7 +74,7 @@ char	*ft_get_line(char *storage)
 	else
 		line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
-		return (ft_free(storage));
+		return (ft_free(storage, ""));
 	i = 0;
 	while (storage[i] != '\n' && storage[i] != '\0')
 	{
@@ -85,7 +99,7 @@ char	*ft_clean_storage(char *storage)
 	while (storage[i] && storage[i] != '\n')
 		i++;
 	if (storage[i] == '\0')
-		return (ft_free(storage));
+		return (ft_free(storage, ""));
 	j = 0;
 	clean = (char *)malloc(sizeof(char) * (ft_strlen(storage) - i));
 	if (!clean)

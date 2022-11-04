@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccaballe <ccaballe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:20:16 by ccaballe          #+#    #+#             */
-/*   Updated: 2022/11/04 18:16:18 by ccaballe         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:20:42 by ccaballe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_free(char **str)
 {
@@ -104,24 +104,24 @@ char	*ft_clean_storage(char *storage)
 
 char	*get_next_line(int fd)
 {
-	static char	*storage = NULL;
+	static char	*storage[1024] = {0};
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!storage)
+	if (!storage[fd])
 	{
-		storage = malloc(sizeof(char) + 1);
-		if (!storage)
+		storage[fd] = malloc(sizeof(char) + 1);
+		if (!storage[fd])
 			return (0);
-		storage[0] = 0;
+		storage[fd][0] = 0;
 	}
-	storage = ft_read_file(fd, storage);
-	if (!storage)
+	storage[fd] = ft_read_file(fd, storage[fd]);
+	if (!storage[fd])
 		return (NULL);
-	line = ft_get_line(storage);
+	line = ft_get_line(storage[fd]);
 	if (!line)
-		return (ft_free(&storage));
-	storage = ft_clean_storage(storage);
+		return (ft_free(&storage[fd]));
+	storage[fd] = ft_clean_storage(storage[fd]);
 	return (line);
 }

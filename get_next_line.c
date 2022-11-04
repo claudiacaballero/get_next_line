@@ -12,23 +12,10 @@
 
 #include "get_next_line.h"
 
-void	*ft_free(char *str1, char *str2)
+void	*ft_free(char *str)
 {
-	if (!str2 || str2[0] == '\0')
-	{
-		free(str1);
-		return (NULL);
-	}	
-	else if (!str1 || str1[0] == '\0')
-	{
-		free(str2);
-		return (NULL);
-	}	
-	else
-	{
-		free(str1);
-		free(str2);
-	}
+	free(str);
+	str = NULL;
 	return (NULL);
 }
 
@@ -39,7 +26,7 @@ char	*ft_read_file(int fd, char *storage)
 
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
-		return (ft_free(storage, ""));
+		return (ft_free(storage));
 	bytes_read = 1;
 	buffer[0] = '\0';
 	while (!ft_strchr(buffer, '\n') && bytes_read > 0)
@@ -48,12 +35,10 @@ char	*ft_read_file(int fd, char *storage)
 		if (bytes_read == -1)
 		{
 			free (buffer);
-			return (ft_free(storage, ""));
+			return (ft_free(storage));
 		}
 		buffer[bytes_read] = '\0';
 		storage = ft_strjoin(storage, buffer);
-		if (!storage)
-			return (ft_free(buffer, ""));
 	}
 	free(buffer);
 	return (storage);
@@ -74,7 +59,7 @@ char	*ft_get_line(char *storage)
 	else
 		line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
-		return (ft_free(storage, ""));
+		return (NULL);
 	i = 0;
 	while (storage[i] != '\n' && storage[i] != '\0')
 	{
@@ -94,21 +79,18 @@ char	*ft_clean_storage(char *storage)
 	int		j;
 
 	if (!storage)
-		return (NULL);
+		return (ft_free(storage));
 	i = 0;
 	while (storage[i] && storage[i] != '\n')
 		i++;
 	if (storage[i] == '\0')
-		return (ft_free(storage, ""));
+		return (ft_free(storage));
 	j = 0;
 	clean = (char *)malloc(sizeof(char) * (ft_strlen(storage) - i));
 	if (!clean)
 		return (NULL);
 	while (storage[++i])
-	{
-		clean[j] = storage[i];
-		j++;
-	}
+		clean[j++] = storage[i];
 	clean[j] = '\0';
 	free(storage);
 	return (clean);
@@ -121,9 +103,16 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (!storage)
+	{
+		storage = malloc(sizeof(char) + 1);
+		if (!storage)
+			return (0);
+		storage[0] = 0;
+	}
 	storage = ft_read_file(fd, storage);
 	if (!storage)
-		return (NULL);
+		return (ft_free(storage));
 	line = ft_get_line(storage);
 	storage = ft_clean_storage(storage);
 	return (line);

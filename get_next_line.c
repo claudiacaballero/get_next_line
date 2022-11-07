@@ -6,7 +6,7 @@
 /*   By: ccaballe <ccaballe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:20:16 by ccaballe          #+#    #+#             */
-/*   Updated: 2022/11/04 18:16:18 by ccaballe         ###   ########.fr       */
+/*   Updated: 2022/11/04 21:29:15 by ccaballe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,13 @@ char	*get_next_line(int fd)
 	static char	*storage = NULL;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!storage)
 	{
-		storage = malloc(sizeof(char) + 1);
+		storage = ft_strdup("");
 		if (!storage)
-			return (0);
-		storage[0] = 0;
+			return (NULL);
 	}
 	storage = ft_read_file(fd, storage);
 	if (!storage)

@@ -6,7 +6,7 @@
 /*   By: ccaballe <ccaballe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:03 by ccaballe          #+#    #+#             */
-/*   Updated: 2022/11/04 18:54:46 by ccaballe         ###   ########.fr       */
+/*   Updated: 2022/11/04 21:32:07 by ccaballe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,22 @@ char	*ft_strchr(char *s, int c)
 		return (&a[i]);
 	else
 		return (NULL);
+}
+
+char	*ft_strdup(char *s)
+{
+	char	*m;
+	int		i;
+
+	m = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
+	if (!m)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		m[i] = s[i];
+		i++;
+	}
+	m[i] = '\0';
+	return (m);
 }

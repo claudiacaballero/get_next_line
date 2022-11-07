@@ -6,7 +6,7 @@
 /*   By: ccaballe <ccaballe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:20:16 by ccaballe          #+#    #+#             */
-/*   Updated: 2022/11/04 18:20:42 by ccaballe         ###   ########.fr       */
+/*   Updated: 2022/11/04 21:31:00 by ccaballe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,16 @@ char	*ft_clean_storage(char *storage)
 
 char	*get_next_line(int fd)
 {
-	static char	*storage[1024] = {0};
+	static char	*storage[OPEN_MAX] = {0};
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!storage[fd])
 	{
-		storage[fd] = malloc(sizeof(char) + 1);
+		storage[fd] = ft_strdup("");
 		if (!storage[fd])
-			return (0);
-		storage[fd][0] = 0;
+			return (NULL);
 	}
 	storage[fd] = ft_read_file(fd, storage[fd]);
 	if (!storage[fd])
